@@ -1,4 +1,4 @@
-#Sat Feb 01 13:52:49 EST 2020
-base.0=/home/akash/Downloads/SimpleMessenger/app/build/intermediates/dex/debug/mergeDexDebug/out
+#Sat Feb 01 15:33:34 EST 2020
+base.0=/home/akash/CSE 586/SimpleMessenger/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

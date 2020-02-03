@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/akash/Downloads/SimpleMessenger/app/build/intermediates/res/merged/debug/values_values.arsc.flat",
+            "outputFile": "/home/akash/CSE 586/SimpleMessenger/app/build/intermediates/res/merged/debug/values_values.arsc.flat",
             "map": [
                 {
-                    "source": "/home/akash/Downloads/SimpleMessenger/app/src/main/res/values/strings.xml",
+                    "source": "/home/akash/CSE 586/SimpleMessenger/app/src/main/res/values/strings.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",

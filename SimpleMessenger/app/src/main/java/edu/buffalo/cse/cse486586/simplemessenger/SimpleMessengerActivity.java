@@ -151,7 +151,8 @@ public class SimpleMessengerActivity extends Activity {
         @Override
         protected Void doInBackground(ServerSocket... sockets) {
             ServerSocket serverSocket = sockets[0];
-            
+            String myString="Akash Roy";
+            System.out.println(myString);
             /*
              * TODO: Fill in your server code that receives messages and passes them
              * to onProgressUpdate().
