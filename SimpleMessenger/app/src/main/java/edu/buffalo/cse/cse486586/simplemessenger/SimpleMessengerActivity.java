@@ -1,14 +1,9 @@
 package edu.buffalo.cse.cse486586.simplemessenger;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -166,18 +161,24 @@ public class SimpleMessengerActivity extends Activity {
             try {
                 while (true) {
                     Socket socket = serverSocket.accept();
-                    Log.d("Server", "Success ");
-                    DataInputStream input = new DataInputStream(socket.getInputStream());
-                    String string = input.readUTF();
-                    Log.d(TAG, string);
-                    //https://stackoverflow.com/questions/14474856/how-to-call-onprogressupdate-method-in-asyntask-in-android
-                    publishProgress(string);
+                    Log.d("Server:", "Connection Successfull");
+                    //https://stackoverflow.com/questions/737318/should-i-use-datainputstream-or-bufferedinputstream
+                    DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+                    String inputString = inputStream.readUTF();
+                    Log.d("Server:", "Received String");
+                    Log.d("Server", "Sending the Message to OnProgressUpdate");
+                    publishProgress(inputString);
+                    Log.d("Server", "Creating a dummy output stream so handshake will be complete and we can close the socket");
+                    DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+                    outputStream.writeUTF("Acknowledgement");
+                    socket.close();
                 }
             }
             catch (Exception ex)
             {
                 ex.getMessage();
             }
+
 
             return null;
         }
@@ -186,7 +187,6 @@ public class SimpleMessengerActivity extends Activity {
             /*
              * The following code displays what is received in doInBackground().
              */
-
             String strReceived = strings[0].trim();
             TextView remoteTextView = (TextView) findViewById(R.id.remote_text_display);
             remoteTextView.append(strReceived + "\t\n");
@@ -233,19 +233,22 @@ public class SimpleMessengerActivity extends Activity {
                 if (msgs[1].equals(REMOTE_PORT0))
                     remotePort = REMOTE_PORT1;
 
-               Socket socket = new Socket(InetAddress.getByAddress(new byte[]{10, 0, 2, 2}),
+                Socket socket = new Socket(InetAddress.getByAddress(new byte[]{10, 0, 2, 2}),
                         Integer.parseInt(remotePort));
 
                 String msgToSend = msgs[0];
                 /*
                  * TODO: Fill in your client code that sends out a message.
                  */
-                DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-                output.writeUTF(msgToSend);
-                Log.d("Client",msgToSend);
-
-             //   output.flush();
-              //  socket.close();
+                //https://stackoverflow.com/questions/737318/should-i-use-datainputstream-or-bufferedinputstream
+                DataOutputStream outputStream=new DataOutputStream(socket.getOutputStream());
+                Log.d("Client","Message to be Sent"+msgToSend);
+                outputStream.writeUTF(msgToSend);
+                Log.d("Client","Message Sent");
+                Log.d("Server","Creating a dummy output stream so handshake will be complete and we can close the socket");
+                DataInputStream inputStream=new DataInputStream(socket.getInputStream());
+                String dummyString=inputStream.readUTF();
+                socket.close();
             } catch (UnknownHostException e) {
                 Log.e(TAG, "ClientTask UnknownHostException");
             } catch (IOException e) {
